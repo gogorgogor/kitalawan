@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kitalawan</title>
+  <meta name="description" content="Your AI corner-man for arguments at home." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="logo">🥊</span>
+      <div>
+        <h1>kitalawan</h1>
+        <p class="tag">Your corner-man for arguments at home.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <form id="form" class="card">
+      <div class="row toggles">
+        <label class="seg">
+          <span>Arguing with my</span>
+          <select name="partnerLabel">
+            <option value="wife">wife</option>
+            <option value="girlfriend">girlfriend</option>
+          </select>
+        </label>
+        <label class="seg">
+          <span>Language</span>
+          <select name="language">
+            <option value="en">English</option>
+            <option value="id">Bahasa Indonesia</option>
+          </select>
+        </label>
+      </div>
+
+      <label class="field">
+        <span class="label">What's the fight about?</span>
+        <textarea name="context" rows="4" placeholder="e.g. She says I never plan date nights. I planned one two weeks ago and she cancelled…"></textarea>
+      </label>
+
+      <section class="block">
+        <div class="block-head">
+          <span class="label">🎙️ Live record</span>
+          <span id="recStatus" class="muted"></span>
+        </div>
+        <p class="note">Recording someone without their knowledge may be illegal where you live and is a great way to lose the argument. Tell her you're recording.</p>
+        <div class="row">
+          <button type="button" id="recBtn" class="btn rec">● Start recording</button>
+          <span id="recTimer" class="timer" hidden>00:00</span>
+        </div>
+        <textarea id="liveTranscript" name="liveTranscript" rows="4" placeholder="Live transcript appears here (Chrome/Edge/Safari). You can edit it."></textarea>
+        <p id="speechWarn" class="muted small" hidden>Live transcription isn't supported in this browser. The recording will still be attached as audio.</p>
+      </section>
+
+      <section class="block">
+        <span class="label">📎 Evidence</span>
+        <div id="drop" class="drop" tabindex="0" role="button" aria-label="Add screenshots or recordings">
+          <strong>Drop screenshots, photos, or recordings</strong>
+          <span class="muted">or click to choose · images (PNG/JPG/WebP/GIF) and audio</span>
+          <input id="fileInput" type="file" multiple accept="image/png,image/jpeg,image/webp,image/gif,audio/*,video/mp4,video/webm" hidden />
+        </div>
+        <p id="audioWarn" class="muted small" hidden>Heads up: audio file transcription isn't configured on this server, so dropped recordings will be skipped. Live transcripts still work.</p>
+        <ul id="fileList" class="files"></ul>
+      </section>
+
+      <button type="submit" id="submitBtn" class="btn primary">Analyse my case</button>
+      <p id="error" class="error" hidden></p>
+    </form>
+
+    <section id="loading" class="card loading" hidden>
+      <div class="spinner"></div>
+      <p id="loadingMsg">Reviewing the evidence…</p>
+    </section>
+
+    <section id="results" hidden></section>
+  </main>
+
+  <footer class="muted small">Kitalawan gives honest advice — sometimes that means you're the one who needs to apologise.</footer>
+  <script src="app.js" type="module"></script>
+</body>
+</html>
