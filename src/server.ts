@@ -80,6 +80,8 @@ app.post("/api/analyze", upload.array("files", MAX_FILES), async (req, res) => {
       res.status(429).json({ error: "Too many arguments at once. Try again in a moment." });
     } else if (err instanceof Anthropic.APIError) {
       res.status(502).json({ error: `AI service error (${err.status}). Try again.` });
+    } else if (err instanceof Error && err.message.includes("Could not resolve authentication method")) {
+      res.status(500).json({ error: "AI is not set up yet: the server has no ANTHROPIC_API_KEY. Add it and restart the app." });
     } else {
       res.status(500).json({ error: err instanceof Error ? err.message : "Unknown error" });
     }
@@ -97,6 +99,9 @@ app.use((err: unknown, _req: express.Request, res: express.Response, _next: expr
 
 app.listen(PORT, () => {
   console.log(`kitalawan running at http://localhost:${PORT}`);
+  if (!process.env.ANTHROPIC_API_KEY && !process.env.ANTHROPIC_AUTH_TOKEN) {
+    console.log("Warning: ANTHROPIC_API_KEY not set - the app will load, but analyses will fail until it is added.");
+  }
   if (!transcriptionEnabled()) {
     console.log("Note: TRANSCRIBE_API_KEY not set - uploaded audio files will be skipped (live browser transcription still works).");
   }
